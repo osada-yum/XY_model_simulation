@@ -15,4 +15,10 @@ library = false
 implicit-typing = false
 implicit-external = false
 source-form = "free"
+[dependencies]
+numeric_simulation = { git = "https://github.com/osada-yum/Numerical_utilities.git" }
 
+[[executable]]
+name = "xy2d_relaxation"
+source-dir = "app"
+main = "xy2d_relaxation.f90"
