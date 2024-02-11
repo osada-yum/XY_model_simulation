@@ -14,8 +14,8 @@ module xy2d_m
      !> initializer.
      procedure, pass :: init => init_xy2d
      !> setter.
-     procedure, pass :: set_ising_allup => set_ising_allup_xy2d
-     procedure, pass :: set_ising_random => set_ising_random_xy2d
+     procedure, pass :: set_xy_allup => set_xy_allup_xy2d
+     procedure, pass :: set_xy_random => set_xy_random_xy2d
      procedure, pass :: set_kbt => set_kbt_xy2d
      procedure, pass :: set_beta => set_beta_xy2d
      !> updater.
@@ -44,17 +44,17 @@ contains
     this%ny_ = ny
     this%nall_ = nx * ny
     allocate(this%spins_(this%norishiro_begin() : this%norishiro_end(), 1:2))
-    call this%set_ising_allup()
+    call this%set_xy_allup()
     call this%set_kbt(kbt)
   end subroutine init_xy2d
-  !> set_ising_allup_xy2d: Set spins `(1, 0)`.
-  pure subroutine set_ising_allup_xy2d(this)
+  !> set_xy_allup_xy2d: Set spins `(1, 0)`.
+  pure subroutine set_xy_allup_xy2d(this)
     class(xy2d), intent(inout) :: this
     this%spins_(:, 1) = 1.0_real64
     this%spins_(:, 2) = 0.0_real64
-  end subroutine set_ising_allup_xy2d
-  !> set_ising_random_xy2d: Set spins `1` or `-1` randomly.
-  impure subroutine set_ising_random_xy2d(this)
+  end subroutine set_xy_allup_xy2d
+  !> set_xy_random_xy2d: Set spins `1` or `-1` randomly.
+  impure subroutine set_xy_random_xy2d(this)
     class(xy2d), intent(inout) :: this
     real(real64), allocatable :: r(:)
     allocate(r(1:this%nall_))
@@ -62,7 +62,7 @@ contains
     this%spins_(1:this%nall_, 1) = cos(2 * pi * r(:))
     this%spins_(1:this%nall_, 2) = sin(2 * pi * r(:))
     call this%update_norishiro()
-  end subroutine set_ising_random_xy2d
+  end subroutine set_xy_random_xy2d
   !> set_kbt_xy2d: Set parameter `beta` as `1 / kbt`.
   pure subroutine set_kbt_xy2d(this, kbt)
     class(xy2d), intent(inout) :: this
