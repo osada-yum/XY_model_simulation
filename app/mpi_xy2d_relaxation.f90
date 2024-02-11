@@ -37,7 +37,7 @@ program mpi_xy2d_simulation
   do j = 1, nsample
      if (myrank == 0) &
           write(error_unit, '(a, i0)') "sample: ", j
-     call system%set_ising_allup()
+     call system%set_xy_allup()
      do i = 1, mcs
         call system%update()
         associate(m => system%calc_magne_summ(), &
