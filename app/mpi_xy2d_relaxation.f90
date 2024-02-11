@@ -1,4 +1,4 @@
-program mpi_ising2d_simulation
+program mpi_xy2d_simulation
   use, intrinsic :: iso_fortran_env
   use mpi
   use xy2d_m
@@ -61,4 +61,4 @@ program mpi_ising2d_simulation
     end if
   end block
   call MPI_Finalize(ierr)
-end program mpi_ising2d_simulation
+end program mpi_xy2d_simulation
