@@ -17,7 +17,7 @@ program xy2d_simulation
   write(output_unit , '(a)' ) "# method: METROPOLIS"
   do j = 1, nsample
      write(error_unit, '(a, i0)') "sample: ", j
-     call system%set_xy2d_allup()
+     call system%set_xy_allup()
      do i = 1, mcs
         call system%update()
         associate(m => system%calc_magne_summ(), &
