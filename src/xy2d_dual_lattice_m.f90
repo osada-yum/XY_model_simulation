@@ -9,6 +9,7 @@ module xy2d_dual_lattice_m
   real(real64), parameter, public :: kbt = 0.90d0, beta = 1/ kbt
   real(real64), allocatable, private :: spins_odd(:, :)
   real(real64), allocatable, private :: spins_even(:, :)
+  real(real64), allocatable, private :: rnds(:, :)
   public :: init_simulation_dual_lattice_xy2d, init_lattice_order, update_metropolis, calc_energy, calc_magne
 contains
   !> init_simulation_dual_lattice_xy2d: Initialize the lattice and the random number genrator.
@@ -16,6 +17,7 @@ contains
   impure subroutine init_simulation_dual_lattice_xy2d()
     allocate(spins_odd(2, 1 - nx / 2 : nall / 2 + (nx + 1) / 2))
     allocate(spins_even(2, 1 - (nx + 1) / 2 : nall / 2 + nx / 2))
+    allocate(rnds(2, 1:nall))
   end subroutine init_simulation_dual_lattice_xy2d
   !> init_lattice_order: Initialize spins on the lattice with the all-aligned state.
   impure subroutine init_lattice_order()
@@ -48,6 +50,10 @@ contains
     integer(int64), parameter :: norishiro_odd_down_upper = (nx + 1) / 2, norishiro_odd_up_lower = nall / 2 - nx / 2 + 1
     integer(int64), parameter :: norishiro_even_down_upper = nx / 2, norishiro_even_up_lower = nall / 2 - (nx + 1) / 2 + 1
     integer(int64) :: i
+    do i = 1, nall
+       rnds(1, i) = grnd()
+       rnds(2, i) = grnd()
+    end do
     !> odd.
     do i = 1, norishiro_odd_down_upper
        call local_flip_odd(i)
@@ -90,7 +96,7 @@ contains
        nidx = idx + dx(d)
        summ(1:2) = summ(1:2) + spins_even(1:2, nidx)
     end do
-    new_theta = 2 * pi * grnd()
+    new_theta = 2 * pi * rnds(1, 2 * idx - 1)
     new_spin(1:2) = [cos(new_theta), sin(new_theta)]
     diff_center(1:2) = new_spin(1:2) - spins_odd(1:2, idx)
     delta_e = - sum(diff_center(1:2) * summ(1:2))
@@ -99,7 +105,7 @@ contains
        return
     end if
     !> delta_e > 0.
-    if (grnd() < exp(- beta * delta_e)) &
+    if (rnds(2, 2 * idx - 1) < exp(- beta * delta_e)) &
          & spins_odd(1:2, idx) = new_spin(1:2)
   end subroutine local_flip_odd
   !> local_flip_even: Update the lattice with 1 MCS.
@@ -119,7 +125,7 @@ contains
        nidx = idx + dx(d)
        summ(1:2) = summ(1:2) + spins_odd(1:2, nidx)
     end do
-    new_theta = 2 * pi * grnd()
+    new_theta = 2 * pi * rnds(1, 2 * idx)
     new_spin(1:2) = [cos(new_theta), sin(new_theta)]
     diff_center(1:2) = new_spin(1:2) - spins_even(1:2, idx)
     delta_e = - sum(diff_center(1:2) * summ(1:2))
@@ -128,7 +134,7 @@ contains
        return
     end if
     !> delta_e > 0.
-    if (grnd() < exp(- beta * delta_e)) &
+    if (rnds(2, 2 * idx) < exp(- beta * delta_e)) &
          & spins_even(1:2, idx) = new_spin(1:2)
   end subroutine local_flip_even
   !> calc_energy: Calculate the energy for the lattice.

@@ -8,12 +8,14 @@ module xy2d_simple_m
   real(real64), parameter :: nall_inv = 1.0d0 / nall
   real(real64), parameter, public :: kbt = 0.90d0, beta = 1/ kbt
   real(real64), allocatable, private :: spins(:, :)
+  real(real64), allocatable, private :: rnds(:, :)
   public :: init_simulation_xy2d, init_lattice_order, update_metropolis, calc_energy, calc_magne
 contains
   !> init_simulation_xy2d: Initialize the lattice and the random number genrator.
   !> Skip `n_skip` * 2^(log_2(`nall` * `mcs`)).
   impure subroutine init_simulation_xy2d()
     allocate(spins(2, -nx : nall + nx))
+    allocate(rnds(2, 1:nall))
   end subroutine init_simulation_xy2d
   !> init_lattice_order: Initialize spins on the lattice with the all-aligned state.
   impure subroutine init_lattice_order()
@@ -35,6 +37,10 @@ contains
   !> update_metropolis: Update the lattice with 1 MCS.
   impure subroutine update_metropolis()
     integer(int64) :: i
+    do i = 1, nall
+       rnds(1, i) = grnd()
+       rnds(2, i) = grnd()
+    end do
     !> 奇数.
     do i = 1, nx, 2
        call local_flip(i)
@@ -77,7 +83,7 @@ contains
        nidx = idx + dx(d)
        summ(1:2) = summ(1:2) + spins(1:2, nidx)
     end do
-    new_theta = 2 * pi * grnd()
+    new_theta = 2 * pi * rnds(1, idx)
     new_spin(1:2) = [cos(new_theta), sin(new_theta)]
     diff_center(1:2) = new_spin(1:2) - spins(1:2, idx)
     delta_e = - sum(diff_center(1:2) * summ(1:2))
@@ -86,7 +92,7 @@ contains
        return
     end if
     !> delta_e > 0.
-    if (grnd() < exp(- beta * delta_e)) &
+    if (rnds(2, idx) < exp(- beta * delta_e)) &
          & spins(1:2, idx) = new_spin(1:2)
   end subroutine local_flip
   !> calc_energy: Calculate the energy for the lattice.
