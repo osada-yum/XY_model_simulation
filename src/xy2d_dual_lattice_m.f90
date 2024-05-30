@@ -48,19 +48,19 @@ contains
     integer(int64), parameter :: norishiro_odd_down_upper = (nx + 1) / 2, norishiro_odd_up_lower = nall / 2 - nx / 2 + 1
     integer(int64), parameter :: norishiro_even_down_upper = nx / 2, norishiro_even_up_lower = nall / 2 - (nx + 1) / 2 + 1
     integer(int64) :: i
-    !> 奇数.
+    !> odd.
     do i = 1, norishiro_odd_down_upper
        call local_flip_odd(i)
        spins_odd(:, i + nall / 2) = spins_odd(:, i)
     end do
-    do i = norishiro_odd_down_upper, norishiro_odd_up_lower - 1
+    do i = norishiro_odd_down_upper + 1, norishiro_odd_up_lower - 1
        call local_flip_odd(i)
     end do
     do i = norishiro_odd_up_lower, nall / 2
        call local_flip_odd(i)
        spins_odd(:, i - nall / 2) = spins_odd(:, i)
     end do
-    !> 偶数.
+    !> even.
     do i = 1, norishiro_even_down_upper
        call local_flip_even(i)
        spins_even(:, i + nall / 2) = spins_even(:, i)
