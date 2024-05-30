@@ -27,3 +27,11 @@ main = "xy2d_relaxation.f90"
 name = "mpi_xy2d_relaxation"
 source-dir = "app"
 main = "mpi_xy2d_relaxation.f90"
+[[executable]]
+name = "mpi_xy2d_simple_relaxation"
+source-dir = "app"
+main = "mpi_xy2d_simple_relaxation.f90"
+[[executable]]
+name = "mpi_xy2d_dual_lattice_relaxation"
+source-dir = "app"
+main = "mpi_xy2d_dual_lattice_relaxation.f90"
