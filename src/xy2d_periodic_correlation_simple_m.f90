@@ -132,7 +132,7 @@ contains
           if (rx < 1) rx = rx + nx
           ry = y + dy
           if (ry > ny) ry = ry - ny
-          if (ry < 1) ry = ry + nx
+          if (ry < 1) ry = ry + ny
           res = res + sum(spins(1:2, x, y) * spins(1:2, rx, ry))
        end do
     end do
