@@ -43,3 +43,11 @@ main = "mpi_xy2d_dual_lattice_continuous_update_row_relaxation.f90"
 name = "mpi_xy2d_dual_lattice_continuous_update_lattice_relaxation"
 source-dir = "app"
 main = "mpi_xy2d_dual_lattice_continuous_update_lattice_relaxation.f90"
+[[executable]]
+name = "mpi_xy2d_periodic_correlation_simple_relaxation"
+source-dir = "app"
+main = "mpi_xy2d_periodic_correlation_simple_relaxation.f90"
+[[executable]]
+name = "mpi_xy2d_periodic_correlation_dual_lattice_relaxation"
+source-dir = "app"
+main = "mpi_xy2d_periodic_correlation_dual_lattice_relaxation.f90"
