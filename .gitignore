@@ -1,0 +1,11 @@
+# prog
+*.out
+*.exe
+*.o
+
+# Fortran
+*.mod
+
+# Some files
+*.old
+*.dat
