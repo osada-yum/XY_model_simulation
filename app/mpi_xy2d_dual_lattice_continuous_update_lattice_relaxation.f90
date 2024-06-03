@@ -22,7 +22,7 @@ program mpi_xy2d_dual_lattice_continuous_update_simulation
   call init_genrand(iseed)
   !> Skip random numbers. (num_proc * n_skip + myrank) * 2^e
   !> 2^e must be larger than (nx * ny * mcs * nsample).
-  expo = ceiling(log(real(nx * ny * (mcs + 1) * nsample, real64)) / log(2.0d0)) + 1
+  expo = ceiling(log(real(2 * nx * ny * (mcs + 1) * nsample, real64)) / log(2.0d0)) + 1
   if (num_proc * n_skip + myrank /= 0) &
        & call mt_jumpahead(num_proc * n_skip + myrank, expo)
 
