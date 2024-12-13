@@ -3,7 +3,7 @@ program mpi_xy2d_periodic_correlation_simple_wolff_simulation
   use mpi
   use gf2xe
   use msmt19937
-  use xy2d_periodic_correlation_simple_m
+  use xy2d_periodic_correlation_simple_wolff_m
   use variance_kahan_m
   use mpi_variance_kahan_m
   use variance_covariance_kahan_m
