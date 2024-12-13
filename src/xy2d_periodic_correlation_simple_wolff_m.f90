@@ -22,7 +22,7 @@ module xy2d_periodic_correlation_simple_wolff_m
 
   public :: init_simulation_xy2d, init_lattice_order, update_metropolis, calc_energy, calc_magne
   public :: calc_correlation
-  public :: update_wolff
+  public :: update_wolff, calc_magne_abs
 contains
   !> init_simulation_xy2d: Initialize the lattice and the random number genrator.
   impure subroutine init_simulation_xy2d()
