@@ -6,6 +6,16 @@
 # Fortran
 *.mod
 
+# R
+.RData
+.Rhistory
+
 # Some files
 *.old
 *.dat
+
+# compressed
+*.tar
+*.tar.xz
+*.tar.gz
+*.zip
